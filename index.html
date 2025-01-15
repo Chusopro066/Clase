@@ -22,15 +22,24 @@
 
         // Mostrar contenido según si la IP está permitida
         if (ipsPermitidas.includes(ipUsuario)) {
-          contenidoDiv.innerHTML += `<h1>Bienvenido, tienes acceso permitido.</h1>`;
+          contenidoDiv.innerHTML += `<h1>Bienvenido, perteneces a la élite.</h1>`;
           // Aquí puedes agregar el contenido de la web normal si la IP está permitida
           document.getElementById('hub-menu').style.display = 'block';  // Mostrar el menú
           document.getElementById('game-menu').style.display = 'block';  // Mostrar el menú de juego
         } else {
-          contenidoDiv.innerHTML += `<h1>Acceso restringido. No tienes permiso para acceder a este contenido.</h1>`;
-          // Si la IP no está permitida, puedes ocultar las secciones específicas
+          contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
+          // Si la IP no está permitida, ocultamos los menús
           document.getElementById('hub-menu').style.display = 'none';
           document.getElementById('game-menu').style.display = 'none';
+
+          // Mostrar una imagen aleatoria
+          const imagenes = [
+            'imagen1.jpg', // Sustituir por la ruta de tus imágenes
+            'imagen2.jpg',
+            'imagen3.jpg'
+          ];
+          const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
+          contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido">`;
         }
       } catch (error) {
         console.error('Error al obtener la IP:', error);
@@ -68,8 +77,8 @@
   </div>
 
   <!-- Título de la página -->
-  <div id="title">
-    <!-- Puedes agregar un título aquí si lo necesitas -->
+  <div id="Nacho">
+    <title>"La Élite"</title>
   </div>
 
   <!-- Menú que aparece si la IP está permitida -->
