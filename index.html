@@ -2,26 +2,54 @@
 <html>
 <head>
   <title>Nacho</title>
+  <script>
+    // Función para verificar la IP
+    async function verificarIP() {
+      try {
+        // Hacer la solicitud al archivo PHP
+        const response = await fetch('verificar-ip.php');
+        const data = await response.json();
+
+        const contentDiv = document.getElementById('content');
+        
+        // Mostrar la IP y el mensaje correspondiente
+        contentDiv.innerHTML = `
+          <h1>${data.mensaje}</h1>
+          <p>Tu dirección IP es: ${data.ip}</p>
+        `;
+
+        // Si la IP está permitida, mostrar el contenido adicional
+        if (data.permitido) {
+          contentDiv.innerHTML += `
+            <div id="hub-menu">
+              <div id="custom-url">
+                <input id="url-input" placeholder="https://example.com" type="url">
+                <button id="url-btn" onclick="loadCustomGame()">Custom Url</button>
+              </div>
+            </div>
+            <div id="game-menu">
+              <ul>
+                <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
+              </ul>
+            </div>
+            <div id="game-container">
+              <!-- Placeholder for the game content -->
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Error al verificar la IP:', error);
+      }
+    }
+
+    // Llamar a la función al cargar la página
+    window.onload = verificarIP;
+  </script>
 </head>
 <body>
-  <div id=title>
+  <div id="content">
+    <!-- Aquí se cargará el contenido dinámico -->
+    Cargando...
   </div>
-  <div id="hub-menu">
-    <div id="custom-url">
-    <input id="url-input" placeholder="https://example.com" type="url">
-    <button id="url-btn" onclick="loadCustomGame()">Custom Url</button>
-    </div>
-  </div>
-  <div id="game-menu">
-    <ul style="">
-      <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
-    </ul>
-  </div>
-  
-  <div id="game-container">
-    <!-- Placeholder for the game content -->
-  </div>
-
-  <script src="script.js"></script>
 </body>
 </html>
