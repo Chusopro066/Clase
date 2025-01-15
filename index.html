@@ -1,44 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Nacho</title>
+  <title>Verificación de IP</title>
   <script>
     // Función para verificar la IP
     async function verificarIP() {
       try {
-        // Hacer la solicitud al archivo PHP
+        // Solicitar al archivo PHP
         const response = await fetch('verificar-ip.php');
         const data = await response.json();
 
         const contentDiv = document.getElementById('content');
-        
-        // Mostrar la IP y el mensaje correspondiente
-        contentDiv.innerHTML = `
-          <h1>${data.mensaje}</h1>
-          <p>Tu dirección IP es: ${data.ip}</p>
-        `;
 
-        // Si la IP está permitida, mostrar el contenido adicional
+        // Mostrar siempre la IP
+        contentDiv.innerHTML = `<p>Tu dirección IP es: ${data.ip}</p>`;
+
+        // Mostrar contenido según si está permitido o no
         if (data.permitido) {
-          contentDiv.innerHTML += `
-            <div id="hub-menu">
-              <div id="custom-url">
-                <input id="url-input" placeholder="https://example.com" type="url">
-                <button id="url-btn" onclick="loadCustomGame()">Custom Url</button>
-              </div>
-            </div>
-            <div id="game-menu">
-              <ul>
-                <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
-              </ul>
-            </div>
-            <div id="game-container">
-              <!-- Placeholder for the game content -->
-            </div>
-          `;
+          contentDiv.innerHTML += `<h1>Bienvenido, tienes acceso permitido.</h1>`;
+        } else {
+          contentDiv.innerHTML += `<h1>Acceso restringido. No tienes permiso para acceder a este contenido.</h1>`;
         }
       } catch (error) {
         console.error('Error al verificar la IP:', error);
+        document.getElementById('content').innerHTML = `<p>Error al cargar los datos.</p>`;
       }
     }
 
@@ -48,7 +33,6 @@
 </head>
 <body>
   <div id="content">
-    <!-- Aquí se cargará el contenido dinámico -->
     Cargando...
   </div>
 </body>
