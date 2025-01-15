@@ -5,68 +5,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nacho</title>
+  <style>
+    .imagen-restringida {
+      max-width: 300px;
+      max-height: 300px;
+      width: auto; /* Mantener proporciones */
+      height: auto; /* Mantener proporciones */
+    }
+  </style>
   <script>
-    // Lista de IDs permitidos
-    const idsPermitidos = [
-      'ID12345',  // ID único permitido
-      'ID67890',  // Otro ID permitido
-      'ID11223'   // Otro ID permitido
-    ];
+    async function verificarID() {
+      try {
+        // Generar o recuperar ID único almacenado
+        let idUsuario = localStorage.getItem('usuarioID');
+        if (!idUsuario) {
+          idUsuario = `id-${Math.random().toString(36).substr(2, 9)}`;
+          localStorage.setItem('usuarioID', idUsuario);
+        }
 
-    // Función para generar un ID único aleatorio
-    function generarIdUnico() {
-      return 'ID' + Math.floor(Math.random() * 1000000); // Genera un ID aleatorio
-    }
+        // Lista de IDs permitidas asociadas a nombres
+        const idsPermitidas = {
+          'id-abc123': 'Nacho',
+          'id-xyz789': 'Carlos',
+          'id-def456': 'Ana'
+        };
 
-    // Función que verifica el acceso
-    async function verificarAcceso() {
-      const contenidoDiv = document.getElementById('content');
+        const contenidoDiv = document.getElementById('content');
 
-      // Llamar a la API para obtener la IP pública
-      const response = await fetch('https://api.ipify.org?format=json');
-      const data = await response.json();
-      const ipUsuario = data.ip;
+        // Mostrar siempre el ID
+        contenidoDiv.innerHTML = `<p>Tu ID único es: ${idUsuario}</p>`;
 
-      // Mostrar la IP del usuario
-      contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
+        // Mostrar contenido según si el ID está permitido
+        if (idsPermitidas[idUsuario]) {
+          const nombreUsuario = idsPermitidas[idUsuario];
+          contenidoDiv.innerHTML += `<h1>Bienvenido ${nombreUsuario}, formas parte de la élite.</h1>`;
+          // Mostrar los menús si el ID está permitido
+          document.getElementById('hub-menu').style.display = 'block';
+          document.getElementById('game-menu').style.display = 'block';
+        } else {
+          contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
+          // Si el ID no está permitido, ocultamos los menús
+          document.getElementById('hub-menu').style.display = 'none';
+          document.getElementById('game-menu').style.display = 'none';
 
-      // Verificar si el usuario tiene un ID único guardado en localStorage
-      let sessionId = localStorage.getItem('uniqueId');
-      
-      // Si no existe un ID guardado, generamos uno nuevo y lo guardamos
-      if (!sessionId) {
-        sessionId = generarIdUnico();
-        localStorage.setItem('uniqueId', sessionId);
-      }
-
-      // Mostrar el ID único en la página (opcional)
-      contenidoDiv.innerHTML += `<p>Tu ID único es: ${sessionId}</p>`;
-
-      // Verificar si el ID está en la lista de IDs permitidos
-      if (idsPermitidos.includes(sessionId)) {
-        contenidoDiv.innerHTML += `<h1>Bienvenido, formas parte de la élite.</h1>`;
-        // Mostrar los menús si el ID está permitido
-        document.getElementById('hub-menu').style.display = 'block';
-        document.getElementById('game-menu').style.display = 'block';
-      } else {
-        contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
-        // Si el ID no está permitido, ocultamos los menús
-        document.getElementById('hub-menu').style.display = 'none';
-        document.getElementById('game-menu').style.display = 'none';
-
-        // Mostrar una imagen de acceso restringido
-        const imagenes = [
-          'Imagen1.jpg', // Reemplazar por rutas de imágenes
-          'Imagen2.jpg',
-          'Imagen3.jpg'
-        ];
-        const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-        contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido">`;
+          // Mostrar una imagen aleatoria con límite de tamaño
+          const imagenes = [
+            'imagen1.jpg', // Sustituir por la ruta de tus imágenes
+            'imagen2.jpg',
+            'imagen3.jpg'
+          ];
+          const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
+          contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">`;
+        }
+      } catch (error) {
+        console.error('Error al procesar el ID:', error);
+        document.getElementById('content').innerHTML = '<p>Error al cargar los datos.</p>';
       }
     }
 
-    // Llamar a la función de verificación al cargar la página
-    window.onload = verificarAcceso;
+    // Llamar a la función al cargar la página
+    window.onload = verificarID;
 
     // Función para ir a pantalla completa
     function toggleFullscreen() {
@@ -82,14 +80,14 @@
     function loadCustomGame() {
       const url = document.getElementById('url-input').value;
       if (url) {
-        window.location.href = url;  // Redirigir al juego personalizado
+        window.location.href = url; // Redirigir al juego personalizado
       }
     }
   </script>
 </head>
 
 <body>
-  <!-- Aquí se muestra siempre la IP del usuario -->
+  <!-- Aquí se muestra siempre el ID del usuario -->
   <div id="content">
     Cargando...
   </div>
