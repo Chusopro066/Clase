@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verificación de IP</title>
+  <title>Nacho</title>
   <script>
     async function verificarIP() {
       try {
@@ -15,7 +16,7 @@
         // Lista de IPs permitidas
         const ipsPermitidas = ['95.23.236.163', '192.168.1.2', '203.0.113.42'];
         const contenidoDiv = document.getElementById('content');
-        
+
         // Mostrar siempre la IP
         contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
 
@@ -39,37 +40,8 @@
 
     // Llamar a la función al cargar la página
     window.onload = verificarIP;
-  </script>
-</head>
-<body>
-  <div id="content">
-    Cargando...
-  </div>
 
-  <div id="title">
-    <h1>Bienvenido a mi sitio web</h1>
-  </div>
-
-  <!-- Menú que aparecerá solo si la IP está permitida -->
-  <div id="hub-menu" style="display: none;">
-    <div id="custom-url">
-      <input id="url-input" placeholder="https://example.com" type="url">
-      <button id="url-btn" onclick="loadCustomGame()">Custom Url</button>
-    </div>
-  </div>
-
-  <div id="game-menu" style="display: none;">
-    <ul>
-      <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
-    </ul>
-  </div>
-
-  <div id="game-container">
-    <!-- Placeholder for the game content -->
-  </div>
-
-  <script>
-    // Aquí puedes agregar la lógica para los botones, como cambiar a pantalla completa
+    // Función para ir a pantalla completa
     function toggleFullscreen() {
       const elem = document.documentElement;
       if (document.fullscreenElement) {
@@ -79,6 +51,7 @@
       }
     }
 
+    // Función para cargar un juego personalizado
     function loadCustomGame() {
       const url = document.getElementById('url-input').value;
       if (url) {
@@ -86,5 +59,40 @@
       }
     }
   </script>
+</head>
+
+<body>
+  <!-- Aquí se muestra siempre la IP del usuario -->
+  <div id="content">
+    Cargando...
+  </div>
+
+  <!-- Título de la página -->
+  <div id="title">
+    <!-- Puedes agregar un título aquí si lo necesitas -->
+  </div>
+
+  <!-- Menú que aparece si la IP está permitida -->
+  <div id="hub-menu" style="display: none;">
+    <div id="custom-url">
+      <input id="url-input" placeholder="https://example.com" type="url">
+      <button id="url-btn" onclick="loadCustomGame()">Custom Url</button>
+    </div>
+  </div>
+
+  <!-- Menú del juego que aparece si la IP está permitida -->
+  <div id="game-menu" style="display: none;">
+    <ul>
+      <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
+    </ul>
+  </div>
+
+  <div id="game-container">
+    <!-- Placeholder para el contenido del juego -->
+  </div>
+
+  <script src="script.js"></script>
+
 </body>
+
 </html>
