@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verificación de IP</title>
   <script>
-    // Función para verificar la IP
     async function verificarIP() {
       try {
-        // Solicitar al archivo PHP
-        const response = await fetch('verificar-ip.php');
+        // Llamar a la API de ipify para obtener la IP pública
+        const response = await fetch('https://api.ipify.org?format=json');
         const data = await response.json();
+        const ipUsuario = data.ip;
 
-        const contentDiv = document.getElementById('content');
+        // Lista de IPs permitidas
+        const ipsPermitidas = ['192.168.1.1', '192.168.1.2', '203.0.113.42'];
+        const contenidoDiv = document.getElementById('content');
 
-        // Mostrar siempre la IP
-        contentDiv.innerHTML = `<p>Tu dirección IP es: ${data.ip}</p>`;
+        // Mostrar la IP
+        contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
 
-        // Mostrar contenido según si está permitido o no
-        if (data.permitido) {
-          contentDiv.innerHTML += `<h1>Bienvenido, tienes acceso permitido.</h1>`;
+        // Mostrar contenido según si la IP está permitida
+        if (ipsPermitidas.includes(ipUsuario)) {
+          contenidoDiv.innerHTML += `<h1>Bienvenido, tienes acceso permitido.</h1>`;
         } else {
-          contentDiv.innerHTML += `<h1>Acceso restringido. No tienes permiso para acceder a este contenido.</h1>`;
+          contenidoDiv.innerHTML += `<h1>Acceso restringido. No tienes permiso para acceder a este contenido.</h1>`;
         }
       } catch (error) {
-        console.error('Error al verificar la IP:', error);
-        document.getElementById('content').innerHTML = `<p>Error al cargar los datos.</p>`;
+        console.error('Error al obtener la IP:', error);
+        document.getElementById('content').innerHTML = '<p>Error al cargar los datos.</p>';
       }
     }
 
