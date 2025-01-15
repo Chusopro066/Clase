@@ -22,8 +22,18 @@
 
         const contenidoDiv = document.getElementById('content');
 
-        // Mostrar siempre la IP
+        // Verificar si ya existe un ID único en el localStorage
+        let sessionId = localStorage.getItem('uniqueId');
+        
+        // Si no existe, generamos un nuevo ID único y lo guardamos en localStorage
+        if (!sessionId) {
+          sessionId = generarIdUnico();
+          localStorage.setItem('uniqueId', sessionId);
+        }
+
+        // Mostrar la IP y el ID único
         contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
+        contenidoDiv.innerHTML += `<p>Tu ID único de sesión es: ${sessionId}</p>`;
 
         // Mostrar contenido según si la IP está permitida
         if (ipsPermitidas[ipUsuario]) {
@@ -51,6 +61,13 @@
         console.error('Error al obtener la IP:', error);
         document.getElementById('content').innerHTML = '<p>Error al cargar los datos.</p>';
       }
+    }
+
+    // Generar un identificador único para cada usuario basado en la hora y un número aleatorio
+    function generarIdUnico() {
+      const timestamp = new Date().getTime(); // Obtiene la hora actual en milisegundos
+      const aleatorio = Math.floor(Math.random() * 1000000); // Número aleatorio para agregar variabilidad
+      return `${timestamp}-${aleatorio}`;
     }
 
     // Llamar a la función al cargar la página
