@@ -9,17 +9,17 @@
     .imagen-restringida {
       max-width: 300px;
       max-height: 300px;
-      width: auto;
-      height: auto;
+      width: auto; /* Mantener proporciones */
+      height: auto; /* Mantener proporciones */
     }
   </style>
   <script>
-    // Lista de IDs permitidos asociados a nombres
-    const idsPermitidos = {
-      '1736973519470-978695': 'Nacho',
-      'ID67890': 'Carlos',
-      'ID11223': 'Ana'
-    };
+    // Lista de IDs permitidos
+    const idsPermitidos = [
+      'ID12345', // ID único permitido
+      'ID67890', // Otro ID permitido
+      'ID11223' // Otro ID permitido
+    ];
 
     // Función para generar un ID único aleatorio
     function generarIdUnico() {
@@ -46,13 +46,12 @@
         localStorage.setItem('uniqueId', sessionId);
       }
 
-      // Mostrar el ID único en la página
+      // Mostrar el ID único en la página (opcional)
       contenidoDiv.innerHTML += `<p>Tu ID único es: ${sessionId}</p>`;
 
       // Verificar si el ID está en la lista de IDs permitidos
-      if (idsPermitidos[sessionId]) {
-        const nombreUsuario = idsPermitidos[sessionId];
-        contenidoDiv.innerHTML += `<h1>Bienvenido ${nombreUsuario}, formas parte de la élite.</h1>`;
+      if (idsPermitidos.includes(sessionId)) {
+        contenidoDiv.innerHTML += `<h1>Bienvenido, formas parte de la élite.</h1>`;
         // Mostrar los menús si el ID está permitido
         document.getElementById('hub-menu').style.display = 'block';
         document.getElementById('game-menu').style.display = 'block';
@@ -125,6 +124,7 @@
   <div id="game-container">
     <!-- Placeholder para el contenido del juego -->
   </div>
+  <script src="script.js"></script>
 </body>
 
 </html>
