@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-  
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,19 +13,25 @@
         const data = await response.json();
         const ipUsuario = data.ip;
 
-        // Lista de IPs permitidas
-        const ipsPermitidas = ['95.23.236.163', '192.168.1.2', '203.0.113.42'];
+        // Lista de IPs permitidas asociadas a nombres
+        const ipsPermitidas = {
+          '95.23.236.163': 'Nacho',
+          '192.168.1.2': 'Carlos',
+          '203.0.113.42': 'Ana'
+        };
+
         const contenidoDiv = document.getElementById('content');
 
         // Mostrar siempre la IP
         contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
 
         // Mostrar contenido según si la IP está permitida
-        if (ipsPermitidas.includes(ipUsuario)) {
-          contenidoDiv.innerHTML += `<h1>Bienvenido, perteneces a la élite.</h1>`;
-          // Aquí puedes agregar el contenido de la web normal si la IP está permitida
-          document.getElementById('hub-menu').style.display = 'block';  // Mostrar el menú
-          document.getElementById('game-menu').style.display = 'block';  // Mostrar el menú de juego
+        if (ipsPermitidas[ipUsuario]) {
+          const nombreUsuario = ipsPermitidas[ipUsuario];
+          contenidoDiv.innerHTML += `<h1>Bienvenido ${nombreUsuario}, formas parte de la élite.</h1>`;
+          // Mostrar los menús si la IP está permitida
+          document.getElementById('hub-menu').style.display = 'block';
+          document.getElementById('game-menu').style.display = 'block';
         } else {
           contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
           // Si la IP no está permitida, ocultamos los menús
