@@ -13,17 +13,23 @@
         const ipUsuario = data.ip;
 
         // Lista de IPs permitidas
-        const ipsPermitidas = ['95.23.236.163', '192.168.1.2', '203.0.113.42'];
+        const ipsPermitidas = ['192.168.1.1', '192.168.1.2', '203.0.113.42'];
         const contenidoDiv = document.getElementById('content');
-
-        // Mostrar la IP
+        
+        // Mostrar siempre la IP
         contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
 
         // Mostrar contenido según si la IP está permitida
         if (ipsPermitidas.includes(ipUsuario)) {
           contenidoDiv.innerHTML += `<h1>Bienvenido, tienes acceso permitido.</h1>`;
+          // Aquí puedes agregar el contenido de la web normal si la IP está permitida
+          document.getElementById('hub-menu').style.display = 'block';  // Mostrar el menú
+          document.getElementById('game-menu').style.display = 'block';  // Mostrar el menú de juego
         } else {
           contenidoDiv.innerHTML += `<h1>Acceso restringido. No tienes permiso para acceder a este contenido.</h1>`;
+          // Si la IP no está permitida, puedes ocultar las secciones específicas
+          document.getElementById('hub-menu').style.display = 'none';
+          document.getElementById('game-menu').style.display = 'none';
         }
       } catch (error) {
         console.error('Error al obtener la IP:', error);
@@ -39,5 +45,46 @@
   <div id="content">
     Cargando...
   </div>
+
+  <div id="title">
+    <h1>Bienvenido a mi sitio web</h1>
+  </div>
+
+  <!-- Menú que aparecerá solo si la IP está permitida -->
+  <div id="hub-menu" style="display: none;">
+    <div id="custom-url">
+      <input id="url-input" placeholder="https://example.com" type="url">
+      <button id="url-btn" onclick="loadCustomGame()">Custom Url</button>
+    </div>
+  </div>
+
+  <div id="game-menu" style="display: none;">
+    <ul>
+      <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
+    </ul>
+  </div>
+
+  <div id="game-container">
+    <!-- Placeholder for the game content -->
+  </div>
+
+  <script>
+    // Aquí puedes agregar la lógica para los botones, como cambiar a pantalla completa
+    function toggleFullscreen() {
+      const elem = document.documentElement;
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        elem.requestFullscreen();
+      }
+    }
+
+    function loadCustomGame() {
+      const url = document.getElementById('url-input').value;
+      if (url) {
+        window.location.href = url;  // Redirigir al juego personalizado
+      }
+    }
+  </script>
 </body>
 </html>
