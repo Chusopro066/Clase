@@ -12,6 +12,10 @@
       width: auto; /* Mantener proporciones */
       height: auto; /* Mantener proporciones */
     }
+
+    .lista-titulo {
+      font-weight: bold;
+    }
   </style>
   <script>
     // Lista de IDs permitidos asociados a nombres
@@ -127,6 +131,16 @@
     <ul>
       <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
     </ul>
+
+    <!-- Lista debajo del botón de fullscreen -->
+    <div id="lista-container">
+      <p class="lista-titulo">Lista de URL:</p>
+      <ul>
+        <li>https://openguessr.com/</li>
+        <li>Elemento 2</li>
+        <li>Elemento 3</li>
+      </ul>
+    </div>
   </div>
 
   <div id="game-container">
