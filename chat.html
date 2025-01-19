@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+
+    <style>
+        /* Estilo para el encabezado */
+        header {
+            background-color: #913c03;
+            color: #FFE81F;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Estilo para el enlace de navegación */
+        #nav-link {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: #FFE81F;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        #nav-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilo para la imagen restringida */
+        .imagen-restringida {
+            max-width: 300px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        /* Resto del estilo */
+        /* Aquí puedes añadir más estilos según sea necesario */
+    </style>
+
+    <script>
+        // Lista de IDs permitidos
+        const idsPermitidos = {
+            '1736973519470-978695': 'Nacho',
+            'ID312482': 'Miguel',
+            'ID440102': 'Héctor',
+            'ID980844': 'Pablo Mora',
+            'ID445051': 'Manu',
+            'ID592217': 'Alberto',
+            'ID239849': 'Carlos',
+            'ID370576': 'Javier M',
+            'ID277357': 'Adrian'
+        };
+
+        // Función para mostrar imagen aleatoria
+        function mostrarImagenAleatoria() {
+            const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];  // Añadir tus imágenes aquí
+            const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
+            const imagen = document.getElementById('imagen-restringida');
+            imagen.src = imagenes[indiceAleatorio];
+            imagen.style.display = 'block';  // Asegurarse de que la imagen sea visible
+        }
+
+        // Función para verificar acceso
+        async function verificarAcceso() {
+            const navLink = document.getElementById('nav-link');
+            const imagen = document.getElementById('imagen-restringida');
+            let sessionId = localStorage.getItem('uniqueId');
+
+            // Verificar si el ID está permitido
+            if (idsPermitidos[sessionId]) {
+                navLink.style.display = 'inline';  // Mostrar enlace de regreso
+                imagen.style.display = 'none';  // Ocultar la imagen si el ID es válido
+            } else {
+                navLink.style.display = 'none';  // Ocultar el enlace si el ID no está permitido
+                mostrarImagenAleatoria();  // Mostrar imagen aleatoria si el ID no es válido
+            }
+        }
+
+        // Llamar a la función de verificación al cargar la página
+        window.onload = verificarAcceso;
+    </script>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>Chat Privado</h1>
+        <p>Solo accesible para miembros de la élite</p>
+        <!-- Enlace de navegación solo visible para usuarios con ID permitido -->
+        <a href="index.html" id="nav-link" style="display: none;">Volver a la página de inicio</a>
+    </header>
+
+    <div>
+        <!-- Aquí va el contenido del chat -->
+    </div>
+
+    <!-- Imagen que aparece si el acceso está restringido -->
+    <img id="imagen-restringida" class="imagen-restringida" style="display: none;" alt="Acceso restringido">
+
+</body>
+
+</html>
