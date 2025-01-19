@@ -37,20 +37,20 @@
             position: absolute;
             right: 20px;
             top: 20px;
-            background-color: #2036FB; /* Fondo azul */
+            background-color: #2036FB;
             color: white;
             padding: 12px 25px;
-            border-radius: 8px; /* Bordes redondeados */
+            border-radius: 8px;
             font-size: 1.2rem;
             text-decoration: none;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
         }
 
         #nav-link:hover {
-            background-color: #1020a7; /* Color más oscuro al pasar el ratón */
-            transform: scale(1.05); /* Agrandamiento suave */
-            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al pasar el ratón */
+            background-color: #1020a7;
+            transform: scale(1.05);
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
         }
 
         #content {
@@ -67,6 +67,80 @@
             position: fixed;
             width: 100%;
             bottom: 0;
+        }
+
+        .imagen-restringida {
+            max-width: 300px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+        }
+
+        /* Menú de personalización */
+        #hub-menu {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #hub-menu input {
+            padding: 10px;
+            font-size: 1rem;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        #hub-menu button {
+            background-color: #2036FB;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #hub-menu button:hover {
+            background-color: #1020a7;
+        }
+
+        /* Menú de juego */
+        #game-menu {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #game-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #game-menu ul li {
+            margin: 10px 0;
+        }
+
+        #game-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #game-container iframe {
+            width: 100%;
+            height: 60vh;
+            border: none;
+            display: none;
+            margin-top: 20px;
+        }
+
+        #game-container.fullscreen iframe {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 1.2rem;
+            margin-top: 20px;
         }
     </style>
 
@@ -116,7 +190,7 @@
 
                 // Mostrar el botón de navegación al chat
                 const navLink = document.getElementById('nav-link');
-                navLink.style.display = 'inline-block'; // Mostrar el botón
+                navLink.style.display = 'inline-block';
             } else {
                 contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
 
@@ -134,8 +208,32 @@
         }
 
         window.onload = verificarAcceso;
-    </script>
 
+        function loadCustomGame() {
+            const url = document.getElementById('url-input').value;
+            const iframe = document.getElementById('game-iframe');
+            const errorMessage = document.getElementById('error-message');
+
+            if (url && url.startsWith('http')) {
+                iframe.src = url;
+                iframe.style.display = 'block';
+                errorMessage.style.display = 'none';
+            } else {
+                iframe.style.display = 'none';
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Por favor, ingresa una URL válida.';
+            }
+        }
+
+        function toggleFullscreen() {
+            const elem = document.documentElement;
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                elem.requestFullscreen();
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -176,7 +274,7 @@
         </div>
         <script src="script.js"></script>
     </div>
-    
+
     <footer>
         <p>© 2025 Todos los derechos reservados.</p>
     </footer>
