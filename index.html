@@ -284,11 +284,22 @@
         <ul>
             <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
         </ul>
-
-        <div id="game-container">
-            <iframe id="game-iframe" style="display: none;"></iframe>
+        
+        <!-- Lista debajo del botón de fullscreen -->
+        <div id="lista-container">
+            <p class="lista-titulo">Lista de URL más usadas (para facilitar que no tengáis que buscarlas):</p>
+            <ul>
+                <li><a href="https://openguessr.com/">https://openguessr.com/</a></li>
+                <li><a href="https://vegasworld.com/">https://vegasworld.com/</a></li>
+                <li>Elemento 3</li>
+            </ul>
         </div>
-        <script src="script.js"></script>
+    </div>
+  
+    <div id="game-container">
+        <iframe id="game-iframe" style="display: none;"></iframe>
+    </div>
+    <script src="script.js"></script>
     </div>
 
     <footer>
