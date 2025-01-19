@@ -17,8 +17,8 @@
     .imagen-restringida {
       max-width: 300px;
       max-height: 300px;
-      width: auto; /* Mantener proporciones */
-      height: auto; /* Mantener proporciones */
+      width: auto;
+      height: auto;
     }
 
     .lista-titulo {
@@ -42,7 +42,8 @@
       font-size: 1.2rem;
     }
 
-    #hub-menu, #game-menu {
+    #hub-menu,
+    #game-menu {
       text-align: center;
       margin-top: 20px;
     }
@@ -54,7 +55,8 @@
       margin-right: 10px;
     }
 
-    #hub-menu button, #game-menu button {
+    #hub-menu button,
+    #game-menu button {
       background-color: #2036FB;
       color: #fff;
       border: none;
@@ -63,7 +65,8 @@
       cursor: pointer;
     }
 
-    #hub-menu button:hover, #game-menu button:hover {
+    #hub-menu button:hover,
+    #game-menu button:hover {
       background-color: #1020a7;
     }
 
@@ -95,6 +98,21 @@
       display: block;
       margin: 20px auto;
     }
+
+    /* Estilo para el iframe */
+    #game-container iframe {
+      width: 100%;
+      height: 60vh; /* El iframe ocupará el 60% de la altura de la pantalla cuando no esté en fullscreen */
+      border: none;
+      margin-top: 20px;
+    }
+
+    /* Estilo para el iframe cuando está en pantalla completa */
+    #game-container.fullscreen iframe {
+      width: 100%;
+      height: 100vh; /* Cuando está en pantalla completa, ocupará toda la pantalla */
+    }
+
   </style>
   <script>
     // Lista de IDs permitidos asociados a nombres
@@ -173,10 +191,14 @@
     // Función para ir a pantalla completa
     function toggleFullscreen() {
       const elem = document.documentElement;
+      const gameContainer = document.getElementById('game-container');
+
       if (document.fullscreenElement) {
         document.exitFullscreen();
+        gameContainer.classList.remove('fullscreen');
       } else {
         elem.requestFullscreen();
+        gameContainer.classList.add('fullscreen');
       }
     }
 
@@ -228,7 +250,8 @@
   </div>
 
   <div id="game-container">
-    <!-- Placeholder para el contenido del juego -->
+    <!-- Iframe de juego -->
+    <iframe src="https://www.example.com" title="Juego" frameborder="0"></iframe>
   </div>
 
   <!-- Incluir script.js -->
