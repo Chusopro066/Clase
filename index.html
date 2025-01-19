@@ -42,6 +42,16 @@
       font-size: 1.2rem;
     }
 
+    #content {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    #content p {
+      margin: 10px 0;
+    }
+
     #hub-menu,
     #game-menu {
       text-align: center;
@@ -89,20 +99,15 @@
       bottom: 0;
     }
 
-    #content {
-      padding: 20px;
+    #game-container {
+      margin-top: 20px;
       text-align: center;
-    }
-
-    .restricted-content img {
-      display: block;
-      margin: 20px auto;
     }
 
     /* Estilo para el iframe */
     #game-container iframe {
       width: 100%;
-      height: 60vh; /* El iframe ocupará el 60% de la altura de la pantalla cuando no esté en fullscreen */
+      height: 60vh;
       border: none;
       margin-top: 20px;
     }
@@ -110,9 +115,8 @@
     /* Estilo para el iframe cuando está en pantalla completa */
     #game-container.fullscreen iframe {
       width: 100%;
-      height: 100vh; /* Cuando está en pantalla completa, ocupará toda la pantalla */
+      height: 100vh;
     }
-
   </style>
   <script>
     // Lista de IDs permitidos asociados a nombres
@@ -141,9 +145,6 @@
       const data = await response.json();
       const ipUsuario = data.ip;
 
-      // Mostrar la IP del usuario
-      contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
-
       // Verificar si el usuario tiene un ID único guardado en localStorage
       let sessionId = localStorage.getItem('uniqueId');
 
@@ -153,19 +154,20 @@
         localStorage.setItem('uniqueId', sessionId);
       }
 
-      // Mostrar el ID único en la página
+      // Mostrar la IP y el ID único
+      contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
       contenidoDiv.innerHTML += `<p>Tu ID único es: ${sessionId}</p>`;
 
       // Verificar si el ID está en la lista de IDs permitidos
       if (idsPermitidos[sessionId]) {
         const nombreUsuario = idsPermitidos[sessionId];
-        contenidoDiv.innerHTML += `<h1>Bienvenido, ${nombreUsuario}. Formas parte de la élite.</h1>`;
+        contenidoDiv.innerHTML += `<h2>Bienvenido, ${nombreUsuario}. Formas parte de la élite.</h2>`;
 
         // Mostrar los menús si el ID está permitido
         document.getElementById('hub-menu').style.display = 'block';
         document.getElementById('game-menu').style.display = 'block';
       } else {
-        contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
+        contenidoDiv.innerHTML += `<h2>Acceso restringido. No eres de la élite.</h2>`;
 
         // Si el ID no está permitido, ocultamos los menús
         document.getElementById('hub-menu').style.display = 'none';
@@ -214,15 +216,14 @@
 
 <body>
   <!-- Aquí se muestra siempre la IP del usuario -->
-  <div id="content">
-    Cargando...
-  </div>
-
-  <!-- Título de la página -->
   <header>
     <h1>"La Élite"</h1>
     <p>Acceso exclusivo para usuarios autorizados.</p>
   </header>
+
+  <div id="content">
+    <!-- El contenido de la IP y el ID único aparecerá aquí -->
+  </div>
 
   <!-- Menú que aparece si el ID está permitido -->
   <div id="hub-menu" style="display: none;">
