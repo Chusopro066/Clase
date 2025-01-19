@@ -76,7 +76,6 @@
             height: auto;
         }
 
-        /* Menú de personalización */
         #hub-menu {
             text-align: center;
             margin-top: 20px;
@@ -103,7 +102,6 @@
             background-color: #1020a7;
         }
 
-        /* Menú de juego */
         #game-menu {
             text-align: center;
             margin-top: 20px;
@@ -124,9 +122,10 @@
             text-align: center;
         }
 
+        /* Ajustes del iframe */
         #game-container iframe {
             width: 100%;
-            height: 60vh;
+            height: 80vh; /* Aumentar altura del iframe */
             border: none;
             display: none;
             margin-top: 20px;
@@ -137,37 +136,28 @@
             height: 100vh;
         }
 
+        #game-container {
+            padding: 20px; /* Espaciado alrededor del contenedor */
+        }
+
         .error-message {
             color: red;
             font-size: 1.2rem;
             margin-top: 20px;
         }
 
-        /* Estilo del botón fullscreen */
-        #fullscreen-btn {
-            background-color: #2036FB;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-
-        #fullscreen-btn:hover {
-            background-color: #1020a7;
-        }
-
-        Andreu {
+        .Andreu {
             max-width: 300px;
             max-height: 300px;
             width: auto;
             height: auto;
+            display: block;
+            margin: 20px auto;
         }
-
     </style>
 
     <script>
+        // Lista de IDs permitidos asociados a nombres
         const idsPermitidos = {
             '1736973519470-978695': 'Nacho',
             'ID312482': 'Miguel',
@@ -180,10 +170,12 @@
             'ID277357': 'Adrian'
         };
 
+        // Función para generar un ID único aleatorio
         function generarIdUnico() {
             return 'ID' + Math.floor(Math.random() * 1000000);
         }
 
+        // Función que verifica el acceso
         async function verificarAcceso() {
             const contenidoDiv = document.getElementById('content');
 
@@ -194,8 +186,10 @@
 
             contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
 
+            // Verificar si el usuario tiene un ID único guardado en localStorage
             let sessionId = localStorage.getItem('uniqueId');
 
+            // Si no existe un ID guardado, generamos uno nuevo y lo guardamos
             if (!sessionId) {
                 sessionId = generarIdUnico();
                 localStorage.setItem('uniqueId', sessionId);
@@ -203,6 +197,7 @@
 
             contenidoDiv.innerHTML += `<p>Tu ID único es: ${sessionId}</p>`;
 
+            // Verificar si el ID está en la lista de IDs permitidos
             if (idsPermitidos[sessionId]) {
                 const nombreUsuario = idsPermitidos[sessionId];
                 contenidoDiv.innerHTML += `<h1>Bienvenido, ${nombreUsuario}. Formas parte de la élite.</h1>`;
@@ -211,20 +206,22 @@
                 document.getElementById('hub-menu').style.display = 'block';
                 document.getElementById('game-menu').style.display = 'block';
 
-                // Mostrar el botón de navegación al chat
+                // Mostrar el enlace de navegación al chat
                 const navLink = document.getElementById('nav-link');
-                navLink.style.display = 'inline-block';
+                navLink.style.display = 'inline';  // Hacer visible el enlace
             } else {
                 contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
 
+                // Si el ID no está permitido, ocultamos los menús
                 document.getElementById('hub-menu').style.display = 'none';
                 document.getElementById('game-menu').style.display = 'none';
 
+                // Mostrar una imagen de acceso restringido con límites de tamaño
                 const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];
                 const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
                 contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">`;
 
-                // Ocultar el botón de navegación al chat
+                // Ocultar el enlace de navegación al chat
                 const navLink = document.getElementById('nav-link');
                 navLink.style.display = 'none';
             }
@@ -232,6 +229,7 @@
 
         window.onload = verificarAcceso;
 
+        // Función para cargar un juego personalizado
         function loadCustomGame() {
             const url = document.getElementById('url-input').value;
             const iframe = document.getElementById('game-iframe');
@@ -248,6 +246,7 @@
             }
         }
 
+        // Función para ir a pantalla completa
         function toggleFullscreen() {
             const elem = document.documentElement;
             if (document.fullscreenElement) {
@@ -257,6 +256,7 @@
             }
         }
     </script>
+
 </head>
 
 <body>
@@ -265,7 +265,7 @@
         <h1>"La Élite"</h1>
         <p>Acceso exclusivo para usuarios autorizados.</p>
 
-        <!-- Botón de navegación a la página de chat, solo visible para usuarios permitidos -->
+        <!-- Enlace a la página de chat, solo visible para usuarios con ID permitido -->
         <a href="chat.html" id="nav-link" style="display: none;">Ir al Chat</a>
     </header>
 
@@ -291,26 +291,16 @@
         <ul>
             <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
         </ul>
-        
-        <!-- Lista debajo del botón de fullscreen -->
-        <div id="lista-container">
-            <p class="lista-titulo">Lista de URL más usadas (para facilitar que no tengáis que buscarlas):</p>
-            <ul>
-                <li>https://openguessr.com/</li>
-                <li>https://vegasworld.com/</li>
-                <li>Decidme más</li>
-            </ul>
+
+        <div id="game-container">
+            <iframe id="game-iframe" style="display: none;"></iframe>
         </div>
-    </div>
-    <img id="game-image" src="PedroSudoroso.jpg" alt="Imagen del juego" class="Andreu">
-    <div id="game-container">
-        <iframe id="game-iframe" style="display: none;"></iframe>
-    </div>
-    <script src="script.js"></script>
+        <img id="game-image" src="PedroSudoroso.jpg" alt="Imagen del juego" class="Andreu">
+        <script src="script.js"></script>
     </div>
 
     <footer>
-        <p>© 2025 Todos los derechos reservados a Nacho.</p>
+        <p>© 2025 Todos los derechos reservados.</p>
     </footer>
 
 </body>
