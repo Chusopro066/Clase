@@ -109,6 +109,7 @@
       width: 100%;
       height: 60vh;
       border: none;
+      display: none; /* El iframe está oculto al principio */
       margin-top: 20px;
     }
 
@@ -116,6 +117,12 @@
     #game-container.fullscreen iframe {
       width: 100%;
       height: 100vh;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 1.2rem;
+      margin-top: 20px;
     }
   </style>
   <script>
@@ -128,7 +135,8 @@
       'ID445051': 'Manu',
       'ID592217': 'Alberto',
       'ID239849': 'Carlos',
-      'ID370576': 'Javier M'
+      'ID370576': 'Javier M',
+      'ID277357': 'Adrian'
     };
 
     // Función para generar un ID único aleatorio
@@ -145,6 +153,9 @@
       const data = await response.json();
       const ipUsuario = data.ip;
 
+      // Mostrar la IP del usuario
+      contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
+
       // Verificar si el usuario tiene un ID único guardado en localStorage
       let sessionId = localStorage.getItem('uniqueId');
 
@@ -154,75 +165,78 @@
         localStorage.setItem('uniqueId', sessionId);
       }
 
-      // Mostrar la IP y el ID único
-      contenidoDiv.innerHTML = `<p>Tu dirección IP es: ${ipUsuario}</p>`;
+      // Mostrar el ID único en la página
       contenidoDiv.innerHTML += `<p>Tu ID único es: ${sessionId}</p>`;
 
       // Verificar si el ID está en la lista de IDs permitidos
       if (idsPermitidos[sessionId]) {
         const nombreUsuario = idsPermitidos[sessionId];
-        contenidoDiv.innerHTML += `<h2>Bienvenido, ${nombreUsuario}. Formas parte de la élite.</h2>`;
+        contenidoDiv.innerHTML += `<h1>Bienvenido, ${nombreUsuario}. Formas parte de la élite.</h1>`;
 
         // Mostrar los menús si el ID está permitido
         document.getElementById('hub-menu').style.display = 'block';
         document.getElementById('game-menu').style.display = 'block';
       } else {
-        contenidoDiv.innerHTML += `<h2>Acceso restringido. No eres de la élite.</h2>`;
+        contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
 
         // Si el ID no está permitido, ocultamos los menús
         document.getElementById('hub-menu').style.display = 'none';
         document.getElementById('game-menu').style.display = 'none';
 
         // Mostrar una imagen de acceso restringido con límites de tamaño
-        const imagenes = [
-          'Imagen1.jpg',
-          'Imagen2.jpg',
-          'Imagen3.jpg'
-        ];
+        const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];
         const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-
-        contenidoDiv.innerHTML += `<div class="restricted-content">
-          <img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">
-        </div>`;
+        contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">`;
       }
     }
 
     // Llamar a la función de verificación al cargar la página
     window.onload = verificarAcceso;
 
-    // Función para ir a pantalla completa
-    function toggleFullscreen() {
-      const elem = document.documentElement;
-      const gameContainer = document.getElementById('game-container');
-
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-        gameContainer.classList.remove('fullscreen');
-      } else {
-        elem.requestFullscreen();
-        gameContainer.classList.add('fullscreen');
-      }
-    }
-
     // Función para cargar un juego personalizado
     function loadCustomGame() {
       const url = document.getElementById('url-input').value;
-      if (url) {
-        window.location.href = url; // Redirigir al juego personalizado
+      const iframe = document.getElementById('game-iframe');
+      const errorMessage = document.getElementById('error-message');
+
+      // Verificar si la URL es válida
+      if (url && url.startsWith('http')) {
+        // Si la URL es válida, mostrar el iframe y cargar la URL
+        iframe.src = url;
+        iframe.style.display = 'block'; // Mostrar el iframe
+        errorMessage.style.display = 'none'; // Ocultar mensaje de error
+      } else {
+        // Si la URL no es válida, mostrar el mensaje de error
+        iframe.style.display = 'none'; // Ocultar el iframe
+        errorMessage.style.display = 'block'; // Mostrar mensaje de error
+        errorMessage.textContent = 'Por favor, ingresa una URL válida.';
+      }
+    }
+
+    // Función para ir a pantalla completa
+    function toggleFullscreen() {
+      const elem = document.documentElement;
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        elem.requestFullscreen();
       }
     }
   </script>
 </head>
 
 <body>
-  <!-- Aquí se muestra siempre la IP del usuario -->
   <header>
     <h1>"La Élite"</h1>
     <p>Acceso exclusivo para usuarios autorizados.</p>
   </header>
 
   <div id="content">
-    <!-- El contenido de la IP y el ID único aparecerá aquí -->
+    Cargando...
+  </div>
+
+  <div id="Nacho">
+    <p>"La Élite"</p>
   </div>
 
   <!-- Menú que aparece si el ID está permitido -->
@@ -233,33 +247,23 @@
     </div>
   </div>
 
+  <!-- Mensaje de error -->
+  <div id="error-message" class="error-message" style="display: none;"></div>
+
   <!-- Menú del juego que aparece si el ID está permitido -->
   <div id="game-menu" style="display: none;">
     <ul>
       <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
     </ul>
 
-    <!-- Lista debajo del botón de fullscreen -->
-    <div id="lista-container">
-      <p class="lista-titulo">Lista de URL más usadas (para facilitar que no tengáis que buscarlas):</p>
-      <ul>
-        <li><a href="https://openguessr.com/">https://openguessr.com/</a></li>
-        <li><a href="https://vegasworld.com/">https://vegasworld.com/</a></li>
-        <li>Elemento 3</li>
-      </ul>
+    <!-- Contenedor del juego -->
+    <div id="game-container">
+      <iframe id="game-iframe" style="display: none;"></iframe>
     </div>
   </div>
 
-  <div id="game-container">
-    <!-- Iframe de juego -->
-    <iframe src="https://www.example.com" title="Juego" frameborder="0"></iframe>
-  </div>
-
-  <!-- Incluir script.js -->
-  <script src="script.js"></script>
-
   <footer>
-    <p>© 2025 La Élite. Todos los derechos reservados.</p>
+    <p>© 2025 Todos los derechos reservados.</p>
   </footer>
 </body>
 
