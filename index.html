@@ -249,10 +249,6 @@
                 document.getElementById('hub-menu').style.display = 'none';
                 document.getElementById('game-menu').style.display = 'none';
 
-                const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];
-                const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-                contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">`;
-
                 // Mostrar el botón de pop-ups solo si el ID es no permitido
                 const popupsButton = document.createElement('button');
                 popupsButton.id = 'openPopupsButton';
@@ -262,6 +258,10 @@
                 };
                 contenidoDiv.appendChild(popupsButton);
 
+                const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];
+                const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
+                contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">`;
+                
                 // Ocultar el botón de navegación al chat
                 const navLink = document.getElementById('nav-link');
                 navLink.style.display = 'none';
