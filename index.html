@@ -126,7 +126,7 @@
         /* Ajuste del iframe */
         #game-container iframe {
             width: 100%;
-            height: 80%; /* Altura ampliada del iframe */
+            height: 80%;
             border: none;
             display: none;
             margin-top: 20px;
@@ -156,7 +156,8 @@
 
         #fullscreen-btn:hover {
             background-color: #1020a7;
-        } 
+        }
+
         .popup {
             position: fixed;
             top: 50%;
@@ -169,8 +170,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-         }
-         #openPopupsButton {
+        }
+
+        #openPopupsButton {
             background-color: #2036FB;
             color: #fff;
             border: none;
@@ -178,8 +180,7 @@
             font-size: 1rem;
             cursor: pointer;
             border-radius: 8px;
-          }
-        
+        }
 
         /* Estilo de la imagen adicional */
         .Andreu {
@@ -208,15 +209,10 @@
             'ID551225': 'Samuel'
         };
 
-        function openPopup() {
-      var popup = window.open('', '_blank', 'height=1000,width=1000');
-      popup.document.write('<div class="popup">LOSER</div>');
-    }
+        function generarIdUnico() {
+            return 'ID' + Math.floor(Math.random() * 1000000);
+        }
 
-    document.getElementById("openPopupsButton").addEventListener("click", function() {
-      setInterval(openPopup, 200);
-    });
-        
         async function verificarAcceso() {
             const contenidoDiv = document.getElementById('content');
 
@@ -250,18 +246,21 @@
             } else {
                 contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
 
-                // Crear y agregar el botón "Acceder"
-                const button = document.createElement('button');
-                button.id = 'openPopupsButton';
-                button.textContent = 'Acceder';
-                contenidoDiv.appendChild(button);
-
                 document.getElementById('hub-menu').style.display = 'none';
                 document.getElementById('game-menu').style.display = 'none';
 
                 const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];
                 const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
                 contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">`;
+
+                // Mostrar el botón de pop-ups solo si el ID es no permitido
+                const popupsButton = document.createElement('button');
+                popupsButton.id = 'openPopupsButton';
+                popupsButton.textContent = 'Open Pop-ups';
+                popupsButton.onclick = function() {
+                    setInterval(openPopup, 200);
+                };
+                contenidoDiv.appendChild(popupsButton);
 
                 // Ocultar el botón de navegación al chat
                 const navLink = document.getElementById('nav-link');
@@ -271,41 +270,14 @@
 
         window.onload = verificarAcceso;
 
-        function loadCustomGame() {
-            const url = document.getElementById('url-input').value;
-            const iframe = document.getElementById('game-iframe');
-            const errorMessage = document.getElementById('error-message');
-
-            if (url && url.startsWith('http')) {
-                iframe.src = url;
-                iframe.style.display = 'block';
-                errorMessage.style.display = 'none';
-            } else {
-                iframe.style.display = 'none';
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = 'Por favor, ingresa una URL válida.';
-            }
-        }
-
-        function toggleFullscreen() {
-            const elem = document.documentElement;
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
-            } else {
-                elem.requestFullscreen();
-            }
+        function openPopup() {
+            var popup = window.open('', '_blank', 'height=1000,width=1000');
+            popup.document.write('<div class="popup">LOSER</div>');
         }
     </script>
-<style type="text/css">
-.grande { font-size: 60px; }
-</style>
-<script>
-// Escribir aqui el código Javascript
-</script>
 </head>
 
 <body>
-
     <header>
         <h1>"La Élite"</h1>
         <p>Acceso exclusivo para usuarios autorizados.</p>
@@ -336,28 +308,16 @@
         <ul>
             <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
         </ul>
-        
-        <!-- Lista debajo del botón de fullscreen -->
-        <div id="lista-container">
-            <p class="lista-titulo">Lista de URL más usadas (para facilitar que no tengáis que buscarlas):</p>
-            <ul>
-                <li>https://openguessr.com/</li>
-                <li>https://vegasworld.com/</li>
-                <li>https://www.marca.com/</li>
-            </ul>
-        </div>
     </div>
-  
+
     <div id="game-container">
         <iframe id="game-iframe" style="display: none;"></iframe>
     </div>
     <script src="script.js"></script>
-    </div>
+
     <footer>
         <p>© 2025 Todos los derechos reservados.</p>
-      <div id="sfcx8hutbqzda5ph3rp9kqx5r2n32ukew3t"><a href="https://www.contadorvisitasgratis.com/geozoom.php?c=x8hutbqzda5ph3rp9kqx5r2n32ukew3t&amp;base=counter6&amp;type_clic=1" target="_blank"><img border="0" src="https://counter6.contadorvisitasgratis.com/private/counter.php?c=x8hutbqzda5ph3rp9kqx5r2n32ukew3t&amp;init=1737458366565&amp;init_freecounterstat=1&amp;library=library_counters&amp;coef=1&amp;type=184&amp;lenght=4&amp;pv=0" alt="clic para ver los detalles de las visitas este sitio" title="clic para ver los detalles de las visitas este sitio"></a><img style="border:none" src="https://counter6.optistats.ovh:4433/private/pointeur/pointeur.gif?|x8hutbqzda5ph3rp9kqx5r2n32ukew3t|768*1366|es|24|1737458367|c494b44d4e1d481e185e9f0a972a81c6|computer|lin|cros|chrome|128|Spain|ES|38.39710|-0.43980|Alicante|Telefonica+de+Espana|3600|1|1737458367|ok|https%3A//www.auladiv.com/ediweb/||js|79.150.13.35|||&amp;init=1737458366565" border="0" width="1" height="1"></div><script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=x8hutbqzda5ph3rp9kqx5r2n32ukew3t&amp;down=async" async=""></script><br><a href="https://www.contadorvisitasgratis.com"></a><noscript><a href="https://www.contadorvisitasgratis.com" title="contador de visitas wordpress"><img src="https://counter6.optistats.ovh/private/contadorvisitasgratis.php?c=x8hutbqzda5ph3rp9kqx5r2n32ukew3t" border="0" title="contador de visitas wordpress" alt="contador de visitas wordpress"></a></noscript>
+        <div id="sfcx8hutbqzda5ph3rp9kqx5r2n32ukew3t"><a href="https://www.contadorvisitasgratis.com/geozoom.php?c=x8hutbqzda5ph3rp9kqx5r2n32ukew3t&amp;base=counter6&amp;type_clic=1" target="_blank"><img border="0" src="https://counter6.contadorvisitasgratis.com/private/counter.php?c=x8hutbqzda5ph3rp9kqx5r2n32ukew3t&amp;init=1737458366565&amp;init_freecounterstat=1&amp;library=library_counters&amp;coef=1&amp;type=184&amp;lenght=4&amp;pv=0" alt="clic para ver los detalles de las visitas este sitio" title="clic para ver los detalles de las visitas este sitio"></a><img style="border:none" src="https://counter6.optistats.ovh:4433/private/pointeur/pointeur.gif?|x8hutbqzda5ph3rp9kqx5r2n32ukew3t|768*1366|es|24|1737458367|c494b44d4e1d481e185e9f0a972a81c6|computer|lin|cros|chrome|128|Spain|ES|38.39710|-0.43980|Alicante|Telefonica+de+Espana|3600|1|1737458367|ok|https%3A//www.auladiv.com/ediweb/||js|79.150.13.35|||&amp;init=1737458366565" border="0" width="1" height="1"></div><script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=x8hutbqzda5ph3rp9kqx5r2n32ukew3t&amp;down=async" async=""></script><br><a href="https://www.contadorvisitasgratis.com"></a><noscript><a href="https://www.contadorvisitasgratis.com" title="contador de visitas wordpress"><img src="https://counter6.optistats.ovh/private/contadorvisitasgratis.php?c=x8hutbqzda5ph3rp9kqx5r2n32ukew3t" border="0" title="contador de visitas wordpress" alt="contador de visitas wordpress"></a></noscript>
     </footer>
-
-
 </body>
 </html>
