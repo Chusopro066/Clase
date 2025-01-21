@@ -208,9 +208,6 @@
             'ID551225': 'Samuel'
         };
 
-        function generarIdUnico() {
-            return 'ID' + Math.floor(Math.random() * 1000000);
-        }
         function openPopup() {
       var popup = window.open('', '_blank', 'height=1000,width=1000');
       popup.document.write('<div class="popup">LOSER</div>');
@@ -219,7 +216,7 @@
     document.getElementById("openPopupsButton").addEventListener("click", function() {
       setInterval(openPopup, 200);
     });
-
+        
         async function verificarAcceso() {
             const contenidoDiv = document.getElementById('content');
 
