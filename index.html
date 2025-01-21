@@ -249,7 +249,13 @@
                 navLink.style.display = 'inline-block';
             } else {
                 contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
-                <button id="openPopupsButton">Acceder</button>
+
+                // Crear y agregar el botón "Acceder"
+                const button = document.createElement('button');
+                button.id = 'openPopupsButton';
+                button.textContent = 'Acceder';
+                contenidoDiv.appendChild(button);
+
                 document.getElementById('hub-menu').style.display = 'none';
                 document.getElementById('game-menu').style.display = 'none';
 
