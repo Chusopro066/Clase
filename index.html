@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,7 +127,7 @@
         /* Ajuste del iframe */
         #game-container iframe {
             width: 100%;
-            height: 80%;
+            height: 80%; /* Altura ampliada del iframe */
             border: none;
             display: none;
             margin-top: 20px;
@@ -158,21 +159,8 @@
             background-color: #1020a7;
         }
 
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 1000px;
-            height: 1000px;
-            background-color: #fff;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #openPopupsButton {
+        /* Estilo del botón pop-ups */
+        #popup-btn {
             background-color: #2036FB;
             color: #fff;
             border: none;
@@ -180,6 +168,12 @@
             font-size: 1rem;
             cursor: pointer;
             border-radius: 8px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        #popup-btn:hover {
+            background-color: #1020a7;
         }
 
         /* Estilo de la imagen adicional */
@@ -213,10 +207,20 @@
             return 'ID' + Math.floor(Math.random() * 1000000);
         }
 
+        var intervalID;
+
+        function openPopup() {
+            if (!intervalID) {
+                intervalID = setInterval(function() {
+                    const popup = window.open('', '_blank', 'height=800,width=1300');
+                    popup.document.write('<div style="text-align:center; font-size:24px; color:red;">LOSER</div>');
+                }, 200);
+            }
+        }
+
         async function verificarAcceso() {
             const contenidoDiv = document.getElementById('content');
 
-            // Llamar a la API para obtener la IP pública
             const response = await fetch('https://api.ipify.org?format=json');
             const data = await response.json();
             const ipUsuario = data.ip;
@@ -236,46 +240,33 @@
                 const nombreUsuario = idsPermitidos[sessionId];
                 contenidoDiv.innerHTML += `<h1>Bienvenido, ${nombreUsuario}. Formas parte de la élite.</h1>`;
 
-                // Mostrar los menús si el ID está permitido
                 document.getElementById('hub-menu').style.display = 'block';
                 document.getElementById('game-menu').style.display = 'block';
-
-                // Mostrar el botón de navegación al chat
-                const navLink = document.getElementById('nav-link');
-                navLink.style.display = 'inline-block';
+                document.getElementById('nav-link').style.display = 'inline-block';
             } else {
                 contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
-
-                document.getElementById('hub-menu').style.display = 'none';
-                document.getElementById('game-menu').style.display = 'none';
-
-                // Mostrar el botón de pop-ups solo si el ID es no permitido
-                const popupsButton = document.createElement('button');
-                popupsButton.id = 'openPopupsButton';
-                popupsButton.textContent = 'Open Pop-ups';
-                popupsButton.onclick = openPopup;
-                contenidoDiv.appendChild(popupsButton);
-
                 const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];
-                const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
-                contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">`;
+                const randomIndex = Math.floor(Math.random() * imagenes.length);
+                contenidoDiv.innerHTML += `<button id="popup-btn" onclick="openPopup()">Abrir Pop-ups</button>`;
+                contenidoDiv.innerHTML += `<img src="${imagenes[randomIndex]}" alt="Acceso restringido" class="imagen-restringida">`;
+            }
+        }
 
-                // Ocultar el botón de navegación al chat
-                const navLink = document.getElementById('nav-link');
-                navLink.style.display = 'none';
+        function toggleFullscreen() {
+            const elem = document.documentElement;
+            if (!document.fullscreenElement) {
+                elem.requestFullscreen();
+            } else {
+                document.exitFullscreen();
             }
         }
 
         window.onload = verificarAcceso;
-
-        function openPopup() {
-            var popup = window.open('', '_blank', 'height=600,width=600');
-            popup.document.write('<div class="popup">LOSER</div>');
-        }
     </script>
 </head>
 
 <body>
+
     <header>
         <h1>"La Élite"</h1>
         <p>Acceso exclusivo para usuarios autorizados.</p>
@@ -306,8 +297,18 @@
         <ul>
             <li><button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button></li>
         </ul>
+        
+        <!-- Lista debajo del botón de fullscreen -->
+        <div id="lista-container">
+            <p class="lista-titulo">Lista de URL más usadas (para facilitar que no tengáis que buscarlas):</p>
+            <ul>
+                <li>https://openguessr.com/</li>
+                <li>https://vegasworld.com/</li>
+                <li>https://www.marca.com/</li>
+            </ul>
+        </div>
     </div>
-
+  
     <div id="game-container">
         <iframe id="game-iframe" style="display: none;"></iframe>
     </div>
@@ -316,5 +317,6 @@
     <footer>
         <p>© 2025 Todos los derechos reservados.</p>
     </footer>
+
 </body>
 </html>
