@@ -253,15 +253,13 @@
                 const popupsButton = document.createElement('button');
                 popupsButton.id = 'openPopupsButton';
                 popupsButton.textContent = 'Open Pop-ups';
-                popupsButton.onclick = function() {
-                    setInterval(openPopup, 200);
-                };
+                popupsButton.onclick = openPopup;
                 contenidoDiv.appendChild(popupsButton);
 
                 const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];
                 const indiceAleatorio = Math.floor(Math.random() * imagenes.length);
                 contenidoDiv.innerHTML += `<img src="${imagenes[indiceAleatorio]}" alt="Acceso restringido" class="imagen-restringida">`;
-                
+
                 // Ocultar el botón de navegación al chat
                 const navLink = document.getElementById('nav-link');
                 navLink.style.display = 'none';
@@ -271,7 +269,7 @@
         window.onload = verificarAcceso;
 
         function openPopup() {
-            var popup = window.open('', '_blank', 'height=1000,width=1000');
+            var popup = window.open('', '_blank', 'height=600,width=600');
             popup.document.write('<div class="popup">LOSER</div>');
         }
     </script>
