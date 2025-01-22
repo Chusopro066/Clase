@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Nacho</title>
+  <style>
+    body {
+      background: linear-gradient(-45deg, #9400d3 0%, #FFFF00 50%, #00FF00 75%);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      justify-content: center; /* center horizontally */
+      align-items: center; /* center vertically */
+      text-align: center;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-top: 50px;
+    }
+
+    p {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: bold;
+    }
+
+    p1 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    button {
+      background-color: #ff4d4d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-top: 30px;
+      font-size: 24px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #ff1a1a;
+    }
+
+    a {
+      text-align: center;
+    }
+
+    #iframeMode {
+      display: none;
+    }
+
+    .checkbox-label {
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      margin-left: 10px;
+      background-color: #ccc;
+      border-radius: 34px;
+      position: relative;
+      cursor: pointer;
+      transition: .4s;
+    }
+
+    .checkbox-label:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    #iframeMode:checked + .checkbox-label {
+      background-color: #2196F3;
+    }
+
+    #iframeMode:focus + .checkbox-label {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    #iframeMode:checked + .checkbox-label:before {
+      transform: translateX(26px);
+    }
+
+    /* Rounded checkboxes */
+    .checkbox-label.round {
+      border-radius: 34px;
+    }
+
+    .checkbox-label.round:before {
+      border-radius: 50%;
+    }
+  </style>
+  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <h1>YouTube URL Unblocker</h1>
+  <button onclick="convertUrl()">Unblock URL</button>
+  <br>
+  <br>
+  <br>
+  <label for="iframeMode">IFrame Mode</label>
+  <input type="checkbox" id="iframeMode" class="checkbox" onclick="handleIframeModeChange()">
+  <label class="checkbox-label" for="iframeMode"></label>
+  <script>
+    var iframeModeEnabled = false;
+    var iframe = null;
+    
+    function isValidYoutubeUrl(url) {
+      var parser = document.createElement('a');
+      parser.href = url;
+      var hostname = parser.hostname.toLowerCase();
+      return hostname === 'www.youtube.com' || hostname === 'youtube.com';
+    }
+    
+    function handleIframeModeChange() {
+      var checkboxElement = document.getElementById("iframeMode");
+      iframeModeEnabled = checkboxElement.checked;
+      if (!iframeModeEnabled && iframe != null) {
+        iframe.remove();
+        iframe = null;
+      }
+    }
+
+    function convertUrl() {
+      var youtubeUrl = prompt("Enter a YouTube URL:");
+      if (youtubeUrl === null) {
+        return; // Cancelled prompt, do nothing
+      }
+      if (!isValidYoutubeUrl(youtubeUrl)) {
+        alert("Invalid URL. Please try again.");
+        return;
+      }
+
+      var urlToOpen = "https://www.youtube-nocookie.com/embed/" + youtubeUrl.split("v=")[1];
+      if (iframeModeEnabled) {
+        if (iframe != null) {
+          iframe.src = urlToOpen;
+        } else {
+          iframe = document.createElement("iframe");
+          iframe.src = urlToOpen;
+          iframe.width = "100%";
+          iframe.height = "500px";
+          document.body.appendChild(iframe);
+        }
+      } else {
+        window.open(urlToOpen);
+      }
+    }
+  </script>
+</body>
+
+</html>
