@@ -190,26 +190,6 @@
             border: 2px solid #FFE81F;
             border-radius: 10px;
         }
-
-        /* Estilo del bloque de YouTube Unblocker */
-        .unblocker-container {
-            margin-top: 30px;
-        }
-
-        .unblocker-container button {
-            background-color: #2036FB;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .unblocker-container button:hover {
-            background-color: #2036FB;
-        }
-
     </style>
 
     <script>
@@ -267,9 +247,6 @@
                 document.getElementById('hub-menu').style.display = 'block';
                 document.getElementById('game-menu').style.display = 'block';
                 document.getElementById('nav-link').style.display = 'inline-block';
-
-                // Mostrar el botón de desbloquear URL solo para IDs permitidos
-                document.getElementById('unblock-button').style.display = 'inline-block';
             } else {
                 contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
                 const imagenes = ['Imagen1.jpg', 'Imagen3.jpg'];
@@ -288,27 +265,6 @@
             }
         }
 
-        function convertUrl() {
-            var youtubeUrl = prompt("Enter a YouTube URL:");
-            if (youtubeUrl === null) {
-                return; // Cancelled prompt, do nothing
-            }
-            if (!isValidYoutubeUrl(youtubeUrl)) {
-                alert("Invalid URL. Please try again.");
-                return;
-            }
-
-            var urlToOpen = "https://www.youtube-nocookie.com/embed/" + youtubeUrl.split("v=")[1];
-            window.open(urlToOpen);
-        }
-
-        function isValidYoutubeUrl(url) {
-            var parser = document.createElement('a');
-            parser.href = url;
-            var hostname = parser.hostname.toLowerCase();
-            return hostname === 'www.youtube.com' || hostname === 'youtube.com';
-        }
-
         window.onload = verificarAcceso;
     </script>
 </head>
@@ -319,6 +275,7 @@
         <h1>La Élite</h1>
         <p>Acceso exclusivo.</p>
 
+        <!-- Botón de navegación a la página de chat, solo visible para usuarios permitidos -->
         <a href="chat.html" id="nav-link" style="display: none;">Ir al Chat</a>
     </header>
 
@@ -335,6 +292,7 @@
             <button id="url-btn" onclick="loadCustomGame()">Custom Url</button>
         </div>
     </div>
+
     <!-- Mensaje de error -->
     <div id="error-message" class="error-message" style="display: none;"></div>
 
@@ -354,12 +312,7 @@
             </ul>
         </div>
     </div>
-
-    <!-- YouTube Unblocker -->
-    <div id="unblocker" class="unblocker-container" style="display: none;">
-        <button id="unblock-button" onclick="convertUrl()" style="display: none;">Unblock URL</button>
-    </div>
-
+  
     <div id="game-container">
         <iframe id="game-iframe" style="display: none;"></iframe>
     </div>
