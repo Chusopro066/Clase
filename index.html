@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +12,9 @@
             font-family: "Arial", sans-serif;
             background-color: #02020d;
             color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Esto asegura que el contenido ocupe al menos la altura completa de la pantalla */
         }
 
         header {
@@ -57,6 +59,7 @@
             text-align: center;
             margin-top: 20px;
             font-size: 1.2rem;
+            flex-grow: 1; /* Esto permite que el contenido ocupe el espacio disponible */
         }
 
         footer {
@@ -64,9 +67,9 @@
             color: #FFE81F;
             text-align: center;
             padding: 10px 0;
-            position: fixed;
+            position: relative;
             width: 100%;
-            bottom: 0;
+            margin-top: auto; /* Esto asegura que el footer esté al final de la página */
         }
 
         .imagen-restringida {
@@ -248,7 +251,7 @@
                 contenidoDiv.innerHTML += `<h1>Acceso restringido. No eres de la élite.</h1>`;
                 const imagenes = ['Imagen1.jpg', 'Imagen2.jpg', 'Imagen3.jpg'];
                 const randomIndex = Math.floor(Math.random() * imagenes.length);
-                contenidoDiv.innerHTML += `<button id="popup-btn" onclick="openPopup()">Abrir Pop-ups</button>`;
+                contenidoDiv.innerHTML += `<button id="popup-btn" onclick="openPopup()">Acceder</button>`;
                 contenidoDiv.innerHTML += `<img src="${imagenes[randomIndex]}" alt="Acceso restringido" class="imagen-restringida">`;
             }
         }
@@ -314,7 +317,6 @@
         <iframe id="game-iframe" style="display: none;"></iframe>
     </div>
     <script src="script.js"></script>
-
     <footer>
         <p>© 2025 Todos los derechos reservados.</p>
     </footer>
