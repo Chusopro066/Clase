@@ -206,7 +206,7 @@
 
         function checkPopupsAndOpen() {
             // Intentar abrir el primer popup para verificar si las ventanas emergentes están permitidas
-            var popup = window.open('', '_blank', 'height=800,width=1300');
+            const newPopup = window.open('', '_blank', 'height=800,width=1300');
             newPopup.document.write('<div style="text-align:center; font-size:50px; color:black;">HABILITA LAS VENTANAS EMERGENTES PARA ESTE SITIO WEB ANTES DE CONTINUAR, Y VUELVE A PULSAR EL BOTÓN</div>');
             
             // Verificar si el popup se bloqueó
