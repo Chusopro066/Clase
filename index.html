@@ -204,40 +204,35 @@
     <script>
         var intervalID;
 
-        function checkPopupsAndOpen() {
-            // Intentar abrir el primer popup para verificar si las ventanas emergentes están permitidas
-            const newPopup = window.open('', '_blank', 'height=800,width=1300');
-            newPopup.document.write('<div style="text-align:center; font-size:50px; color:black;">HABILITA LAS VENTANAS EMERGENTES PARA ESTE SITIO WEB ANTES DE CONTINUAR, Y VUELVE A PULSAR EL BOTÓN</div>');
-            
-            // Verificar si el popup se bloqueó
-            if (!popup || popup.closed || typeof popup.closed == 'undefined') {
-                // Si las ventanas emergentes están bloqueadas, mostrar mensaje de error
-                document.getElementById("error-message").style.display = "block";
-            } else {
-                // Si el popup se abre correctamente, ocultar el mensaje de error y comenzar a abrir popups con "LOSER"
-                document.getElementById("error-message").style.display = "none";
-                
-                // Iniciar un intervalo que abra un popup con el mensaje "LOSER" cada 0.2 segundos
-                intervalID = setInterval(function() {
-                    const newPopup = window.open('', '_blank', 'height=800,width=1300');
-                    newPopup.document.write('<div style="text-align:center; font-size:100px; color:red;">LOSER</div>');
-                }, 200); // Repetir cada 200 ms
-            }
-        }
-    </script>
+
+function openPopup() {
+
+if (!intervalID) {
+
+intervalID = setInterval(function() {
+
+const popup = window.open('', '_blank', 'height=800,width=1300');
+
+popup.document.write('<div style="text-align:center; font-size:24px; color:red;">LOSER</div>');
+
+}, 200);
+
+}
+
+}
+
+contenidoDiv.innerHTML += `<button id="popup-btn" onclick="openPopup()">Pulsa para Acceder y Desbloquear</button>`
+</script>
+
+
 </head>
+
 <body>
     <header>
         <h1>Nos mudamos</h1>
         <p>CONSULTAR AL ADMIN</p>
     </header>
-
-    <button id="popup-btn" onclick="checkPopupsAndOpen()">Acceder</button>
-
-    <div id="error-message" class="error-message">
-        <p>Por favor, habilita las ventanas emergentes para este sitio web.</p>
-    </div>
-
+    <button id="popup-btn" onclick="openPopup()">Acceder</button>
     <footer>
         <p>© 2025 Todos los derechos reservados.</p>
         <div id="sfcfjc8wuhaeub8flqnw8cstcsusxpk57t8"></div><script type="text/javascript" src="https://counter6.optistats.ovh/private/counter.js?c=fjc8wuhaeub8flqnw8cstcsusxpk57t8&down=async" async></script><br><a href="https://www.contadorvisitasgratis.com"></a><noscript><a href="https://www.contadorvisitasgratis.com" title="contador de visitas"><img src="https://counter6.optistats.ovh/private/contadorvisitasgratis.php?c=fjc8wuhaeub8flqnw8cstcsusxpk57t8" border="0" title="contador de visitas" alt="contador de visitas"></a></noscript>
