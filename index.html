@@ -15,7 +15,6 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh; /* Esto asegura que el contenido ocupe al menos la altura completa de la pantalla */
-            align-items: center; /* Centra el contenido en el eje horizontal */
         }
 
         header {
@@ -75,6 +74,7 @@
             transform: scale(1.05);
             box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
         }
+
 
         #content {
             text-align: center;
@@ -206,24 +206,25 @@
         var intervalID;
 
 
-        function openPopup() {
+function openPopup() {
 
-            if (!intervalID) {
+if (!intervalID) {
 
-                intervalID = setInterval(function() {
+intervalID = setInterval(function() {
 
-                    const popup = window.open('', '_blank', 'height=800,width=1300');
+const popup = window.open('', '_blank', 'height=800,width=1300');
 
-                    popup.document.write('<div style="text-align:center; font-size:100px; color:red;">LOSER</div>');
+popup.document.write('<div style="text-align:center; font-size:24px; color:red;">LOSER</div>');
 
-                }, 200);
+}, 200);
 
-            }
+}
 
-        }
+}
 
-        contenidoDiv.innerHTML += `<button id="popup-btn" onclick="openPopup()">Pulsa para Acceder y Desbloquear</button>`
-    </script>
+contenidoDiv.innerHTML += `<button id="popup-btn" onclick="openPopup()">Pulsa para Acceder y Desbloquear</button>`
+</script>
+
 
 </head>
 
@@ -233,7 +234,7 @@
         <p>CONSULTAR AL ADMIN</p>
     </header>
     <div id="error-message" class="error-message">
-        <p>POR FAVOR, HABILITA LAS VENTANAS EMERGENTES PARA ESTE SITIO WEB O NO FUNCIONARÁ.</p>
+        <p>POR FAVOR, HABILITA LAS VENTANAS EMERGENTES PARA ESTE SITIO WEB, O NO FUNCIONARÁ.</p>
     </div>
     <button id="popup-btn" onclick="openPopup()">Acceder</button>
     <footer>
